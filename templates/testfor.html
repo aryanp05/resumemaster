@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Master</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5; /* Light gray background */
+            color: #333; /* Dark text color */
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
+            min-height: 100vh; /* Ensure footer stays at bottom */
+        }
+
+        header {
+            background-color: #002147; /* Navy blue */
+            color: #fff; /* White text color */
+            padding: 20px;
+            text-align: center;
+            flex-shrink: 0; /* Prevent header from shrinking */
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: #fff; /* White text color */
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+            display: flex;
+            flex-grow: 1; /* Allow main content to grow */
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .content-container {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .pdf-container {
+            width: 800px;
+        }
+
+        .input-container {
+            flex-grow: 1; /* Allow input area to grow and fill available space */
+            margin-left: 20px;
+            text-align: center; /* Center align input headers */
+        }
+
+        .input-container input {
+            display: block;
+            margin: 0 auto 10px; /* Center align input boxes */
+            width: calc(100% - 20px); /* Make input boxes very wide */
+            max-width: 800px; /* Set a maximum width */
+        }
+
+        .content-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .content-row input {
+            width: calc(48% - 10px); /* Adjust width for two inputs per row */
+        }
+
+        .bullet-point-section {
+            max-height: 100px; /* Limit height to control overflow */
+            overflow-y: auto; /* Enable vertical scrolling */
+            margin-bottom: 0px;
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid #ccc; /* Add border to make scrollbar visible */
+            border-bottom: 1px solid #ccc;
+            display:inline-block;
+            padding:15px 20px; /* Adjust the padding to make room for the narrower textarea */
+            line-height:140%;
+            width: 760px; /* Adjust the width as needed */
+            font-size: 16px; /* Adjust the font size as needed */
+            /*background-color: #d0d0d0;*/
+        }
+
+
+        .bullet-point-section input {
+            width: calc(100% - 20px); /* Adjust width for bullet point inputs */
+            display: inline-block;
+            margin-bottom: 5px; /* Space between bullet points */
+            margin: 5px auto; /* Center align bullet point inputs */
+            max-width: 1600px; /* Set a maximum width */
+        }
+        .bullet-point-section textarea {
+            width: calc(100% - 20px); /* Adjust width for bullet point inputs */
+            margin-bottom: 5px; /* Space between bullet points */
+            margin: 5px auto; /* Center align bullet point inputs */
+            max-width: 1600px; /* Set a maximum width */
+        }
+        footer {
+            background-color: #002147; /* Navy blue */
+            color: #fff; /* White text color */
+            text-align: center;
+            padding: 10px;
+            flex-shrink: 0; /* Prevent footer from shrinking */
+            width: 100%;
+        }
+
+        #generateButton {
+            background-color: #3498db; /* Light blue background */
+            color: #fff; /* White text color */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #generateButton:hover {
+            background-color: #2980b9; /* Darker blue background on hover */
+        }
+
+        .addBullet {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-section {
+            border: 1px solid #ccc;
+            margin-bottom: 20px; /* Add margin-bottom to create space between sections */
+            width: 800px;
+        }
+
+        .input-section h2 {
+            cursor: pointer;
+            background-color: #002147;
+            color: #fff;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .input-section .input-box {
+            display: none;
+            margin-top: 10px; /* Add margin-top to create a gap */
+        }
+
+        .input-section.active .input-box {
+            display: block;
+        }
+
+        .addEducation,
+        .addExperience,
+        .addProject,
+        .addSkill {
+            display: none;
+        }
+
+        .input-section.active .addEducation,
+        .input-section.active .addExperience,
+        .input-section.active .addProject,
+        .input-section.active .addSkill {
+            display: inline-block;
+        }
+        .list_skill {
+            margin-bottom: 25px;
+        }
+        .education-entry,
+        .experience-entry,
+        .project-entry {
+            padding-top: 10px;
+            /*background-color: #e0e0e0; */
+            border-top: 3px solid black; /* Add black border to the top */
+            border-bottom: 3px solid black; /* Add black border to the bottom */
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Resume Master</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content-container">
+            <div class="pdf-container">
+                <embed src="/static/JakeCV.pdf#toolbar=0" width="800" height="1050">
+            </div>
+            <form action="/" method="POST">
+                <div class="input-container">
+                    <div class="input-section">
+                        <h2 onclick="toggleSection(this)">Name</h2>
+                        <div class="input-box">
+                            <input type="text" placeholder="Aryan Patel" name="person_name">
+                        </div>
+                    </div>
+                    <div class="input-section" id="contactInfoSection">
+                        <h2 onclick="toggleSection(this)">Contact Info</h2>
+                        <div class="input-box">
+                            <input name="contact_info" type="text" placeholder="Enter Contact Info">
+                            <button type="button" id="addInput">+</button>
+                        </div>
+                    </div>
+                    <div class="input-section" id="educationSection">
+                        <h2 onclick="toggleSection(this)">Education</h2>
+                        <div class="input-box">
+                            <div class="education-entry">
+                                <div class="content-row">
+                                    <input name="education[0]" type="text" placeholder="Institution Name">
+                                    <input name="education[0]" type="text" placeholder="Location">
+                                </div>
+                                <div class="content-row">
+                                    <input name="education[0]" type="text" placeholder="Degree">
+                                    <input name="education[0]" type="text" placeholder="Date">
+                                </div>
+                                <div class="bullet-point-section">
+                                    <textarea name="education[0]" type="text" placeholder="Bullet Point" rows="3"></textarea>
+                                </div>
+                                <button type="button" class="addBullet" onclick="addBulletPoint(this, 'education', 0)">+</button>
+                            </div>
+                        </div>
+                        <button type="button" class="addEducation" id="addEducation">Add Education</button>
+                    </div>
+                    <div class="input-section" id="experienceSection">
+                        <h2 onclick="toggleSection(this)">Experience</h2>
+                        <div class="input-box">
+                            <div class="experience-entry">
+                                <div class="content-row">
+                                    <input name="experience[0]" type="text" placeholder="Role">
+                                    <input name="experience[0]" type="text" placeholder="Location">
+                                </div>
+                                <div class="content-row">
+                                    <input name="experience[0]" type="text" placeholder="Company">
+                                    <input name="experience[0]" type="text" placeholder="Date">
+                                </div>
+                                <div class="bullet-point-section">
+                                    <textarea name="experience[0]" type="text" placeholder="Bullet Point" rows="3"></textarea>
+                                </div>
+                                <button type="button" class="addBullet" onclick="addBulletPoint(this, 'experience', 0)">+</button>
+                            </div>
+                        </div>
+                        <button type="button" class="addExperience" id="addExperience">Add Experience</button>
+                    </div>
+                    <div class="input-section" id="projectsSection">
+                        <h2 onclick="toggleSection(this)">Projects</h2>
+                        <div class="input-box">
+                            <div class="project-entry">
+                                <div class="content-row">
+                                    <input name="project[0]" type="text" placeholder="Project Name">
+                                    <input name="project[0]" type="text" placeholder="Date">
+                                </div>
+                                <div class="bullet-point-section">
+                                    <textarea name="project[0]" type="text" placeholder="Bullet Point" rows="3"></textarea>
+                                </div>
+                                <button type="button" class="addBullet" onclick="addBulletPoint(this, 'project', 0)">+</button>
+                            </div>
+                        </div>
+                        <button type="button" class="addProject" id="addProject">Add Project</button>
+                    </div>
+                    <div class="input-section" id="skillsSection">
+                        <h2 onclick="toggleSection(this)">Technical Skills</h2>
+                        <div class="input-box">
+                            <div class="skill-entry">
+                                <input name="skills[0]" id="skill_name" type="text" placeholder="Skill Name">
+                                <div class="list_skill">
+                                    <input name="skills[0]" type="text" placeholder="List Skills">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="addSkill" id="addSkill">Add Skill</button>
+                    </div>
+                    <!-- <input type="hidden" id="educationCounter" name="educationCounter" value="">
+                    <input type="hidden" id="experienceCounter" name="experienceCounter" value="">
+                    <input type="hidden" id="projectCounter" name="projectCounter" value="">
+                    <input type="hidden" id="skillsCounter" name="skillsCounter" value=""> -->
+                    <button type="submit" id="generateButton">Generate</button>
+                </div>
+            </form>            
+            
+        </div>
+    </main>
+
+    <script>
+        let educationCounter = 0;
+        let experienceCounter = 0;
+        let projectCounter = 0;
+        let skillsCounter = 0;
+
+        // document.getElementById('educationCounter').value = educationCounter;
+        // document.getElementById('experienceCounter').value = experienceCounter;
+        // document.getElementById('projectCounter').value = projectCounter;
+        // document.getElementById('skillsCounter').value = skillsCounter;
+
+        // Function to toggle visibility of input sections
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle("active");
+        }
+
+        // Get the plus button and the input container
+        const addButton = document.getElementById("addInput");
+        const contactInfoSection = document.getElementById("contactInfoSection");
+
+        // Function to add new input box for Contact Info
+        function addInputBox() {
+            // Create new input box
+            const newInputBox = document.createElement("input");
+            newInputBox.type = "text";
+            newInputBox.name = "contact_info";
+            newInputBox.placeholder = "Enter Contact Info";
+            contactInfoSection.querySelector(".input-box").insertBefore(newInputBox, addButton);
+        }
+
+        // Add event listener to the plus button for Contact Info
+        addButton.addEventListener("click", addInputBox);
+
+        // Function to add new bullet point input box
+        function addBulletPoint(button, section_name, section_number) {
+            const section = button.previousElementSibling;
+            const newTextArea = document.createElement("textarea");
+            newTextArea.placeholder = "Bullet Point";
+            newTextArea.rows = 3; // Set the rows attribute to 3
+            newTextArea.name = `${section_name}[${section_number}]`;
+
+            section.appendChild(newTextArea);
+        }
+
+        // Function to add new education input section
+        function addEducationSection() {
+            const educationSection = document.getElementById("educationSection");
+            const newEducationEntry = document.createElement("div");
+            educationCounter++;
+            newEducationEntry.classList.add("education-entry");
+            newEducationEntry.innerHTML = `
+                <div class="content-row">
+                    <input name="education[${educationCounter}]" type="text" placeholder="Institution Name">
+                    <input name="education[${educationCounter}]" type="text" placeholder="Location">
+                </div>
+                <div class="content-row">
+                    <input name="education[${educationCounter}]" type="text" placeholder="Degree">
+                    <input name="education[${educationCounter}]" type="text" placeholder="Date">
+                </div>
+                <div class="bullet-point-section">
+                    <textarea name="education[${educationCounter}]" placeholder="Education Point" rows="3"></textarea>
+                </div>
+                <button type="button" class="addBullet" onclick="addBulletPoint(this, 'education', ${educationCounter})">+</button>
+            `;
+            // document.getElementById('educationCounter').value = educationCounter;
+            educationSection.querySelector(".input-box").appendChild(newEducationEntry);
+        }
+
+        // Function to add new experience input section
+        function addExperienceSection() {
+            const experienceSection = document.getElementById("experienceSection");
+            const newExperienceEntry = document.createElement("div");
+            experienceCounter++;
+            newExperienceEntry.classList.add("experience-entry");
+            newExperienceEntry.innerHTML = `
+                <div class="content-row">
+                    <input name="experience[${experienceCounter}]" type="text" placeholder="Role">
+                    <input name="experience[${experienceCounter}]" type="text" placeholder="Location">
+                </div>
+                <div class="content-row">
+                    <input name="experience[${experienceCounter}]" type="text" placeholder="Company">
+                    <input name="experience[${experienceCounter}]" type="text" placeholder="Date">
+                </div>
+                <div class="bullet-point-section">
+                    <textarea name="experience[${experienceCounter}]" placeholder="Experience Point" rows="3"></textarea>
+                </div>
+                <button type="button" class="addBullet" onclick="addBulletPoint(this, 'experience', ${experienceCounter})">+</button>
+            `;
+            // document.getElementById('experienceCounter').value = experienceCounter;
+            experienceSection.querySelector(".input-box").appendChild(newExperienceEntry);
+        }
+
+        // Function to add new project input section
+        function addProjectSection() {
+            const projectsSection = document.getElementById("projectsSection");
+            const newProjectEntry = document.createElement("div");
+            projectCounter++;
+            newProjectEntry.classList.add("project-entry");
+            newProjectEntry.innerHTML = `
+                <div class="content-row">
+                    <input name="project[${projectCounter}]" type="text" placeholder="Project Name">
+                    <input name="project[${projectCounter}]" type="text" placeholder="Date">
+                </div>
+                <div class="bullet-point-section">
+                    <textarea name="project[${projectCounter}]" placeholder="Project Point" rows="3"></textarea>
+                </div>
+                <button type="button" class="addBullet" onclick="addBulletPoint(this, 'project', ${projectCounter})">+</button>
+            `;
+            // document.getElementById('projectCounter').value = projectCounter;
+            projectsSection.querySelector(".input-box").appendChild(newProjectEntry);
+        }
+
+        // Add event listener to the add education button
+        document.getElementById("addEducation").addEventListener("click", addEducationSection);
+
+        // Add event listener to the add experience button
+        document.getElementById("addExperience").addEventListener("click", addExperienceSection);
+
+        // Add event listener to the add project button
+        document.getElementById("addProject").addEventListener("click", addProjectSection);
+
+        // Function to add new skill input section
+        function addSkillSection() {
+            const skillsSection = document.getElementById("skillsSection");
+            const newSkillEntry = document.createElement("div");
+            skillsCounter++;
+            newSkillEntry.classList.add("skill-entry");
+            newSkillEntry.innerHTML = `
+                <input name="skills[${skillsCounter}]" id="skill_name" type="text" placeholder="Skill Name">
+                <div class="list_skill">
+                    <input name="skills[${skillsCounter}]" type="text" placeholder="List Skills">
+                </div>
+            `;
+            // document.getElementById('skillsCounter').value = skillsCounter;
+            skillsSection.querySelector(".input-box").appendChild(newSkillEntry);
+        }
+
+        // Add event listener to the add skill button
+        document.getElementById("addSkill").addEventListener("click", addSkillSection);
+    </script>
+
+
+    <footer>
+        <p>&copy; 2024 Resume Master. All rights reserved.</p>
+    </footer>
+</body>
+</html>

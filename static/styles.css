@@ -1,0 +1,303 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* Light gray background */
+    color: #333; /* Dark text color */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    min-height: 100vh; /* Ensure footer stays at bottom */
+}
+
+/* Header styles */
+header {
+    background-color: #002147; /* Navy blue */
+    color: #fff; /* White text color */
+    padding: 20px;
+    text-align: center;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: #fff; /* White text color */
+    text-decoration: none;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+header .cta {
+    background-color: #3498db; /* Light blue background */
+    color: #fff; /* White text color */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+header .cta:hover {
+    background-color: #2980b9; /* Darker blue background on hover */
+}
+
+/* Hero section styles */
+.hero {
+    font-family: 'Garamond', serif;
+    background: url('hero-background.jpg') no-repeat center center/cover;
+    color: #fff;
+    padding: 100px 20px;
+    text-align: center;
+    flex-grow: 1; /* Allow hero section to grow and fill available space */
+}
+
+.hero .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px; /* Adjust padding to move content closer to the edge */
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero .hero-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.hero .hero-content img {
+    float: left;
+    max-width: 100%;
+    width: 600px; 
+    height: auto;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+
+.hero .hero-text {
+    max-width: 450px;
+    text-align: left;
+    margin-left: 50px;
+}
+
+.hero .hero-text p {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.hero .cta {
+    background-color: #3498db; /* Light blue background */
+    color: #fff; /* White text color */
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.hero .cta:hover {
+    background-color: #2980b9; /* Darker blue background on hover */
+}
+
+/* Features section styles */
+.features {
+    padding: 50px 20px;
+    background: #f4f4f4;
+    text-align: center;
+}
+
+.features .container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.features h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.features .feature-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.features .feature {
+    flex: 1;
+    margin: 20px;
+    max-width: 300px;
+}
+
+.features .feature h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.features .feature p {
+    font-size: 16px;
+}
+
+/* Footer styles */
+footer {
+    background-color: #002147; /* Navy blue */
+    color: #fff; /* White text color */
+    text-align: center;
+    padding: 20px 0;
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+footer .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Additional features */
+.arrow-list {
+    margin-top: 50px;
+    padding-left: 20px;
+    list-style-type: none; /* Remove default bullet points */
+}
+
+.arrow-list li {
+    position: relative;
+    padding-left: 20px; /* Space for the arrow */
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.arrow-list li:before {
+    content: "\25b2"; /* Unicode for upward arrow */
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 14px; /* Adjust arrow size */
+    color: #3498db; /* Color of the arrow */
+}
+
+.features {
+    padding: 50px 20px;
+    padding-bottom: 0px;
+    background: #f4f4f4;
+    text-align: center;
+}
+
+.features .container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.features h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.features .feature-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.features .feature {
+    flex: 1;
+    margin: 20px;
+    max-width: 300px;
+    text-align: left;
+}
+
+.features .feature h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.features .feature p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.features .feature i {
+    font-size: 46px;
+    margin-bottom: 10px;
+    color: #3498db; /* Adjust icon color */
+}
+
+
+#b-text {
+    color: black
+}
+
+#blue {
+    color: #3498db; /* Light blue color */
+}
+
+#sample-p {
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
+
+#spacer {
+    margin-top: 70px;
+}
+
+.cta-button {
+    display: inline-block;
+    width: 280px; /* Adjust width as needed */
+    padding: 20px; /* Adjust padding for top/bottom space */
+    text-align: center;
+    margin: 20px auto; /* Center the button horizontally */
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 20px; /* Adjust font size */
+    font-weight: bold; /* Optionally make text bold */
+    display: block; /* Ensure block display for proper centering */
+    margin-bottom: 150px;
+}
+
+.cta-button:hover {
+    background-color: #2980b9;
+}
+
+
+
+
+.alert {
+    background-color: #3498db; /* Light blue background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Center align text */
+    padding: 10px; /* Padding around text */
+    margin-top: 20px; /* Top margin to separate from header */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+}

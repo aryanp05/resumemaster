@@ -4,14 +4,19 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 
 # Dictionary of font names and their paths
+font_name_dict = {
+    'Garamond': {'bold': 'Garamond Bold', 'italics': 'Garamond Italics'}
+}
+
 font_path_dict = {
     'Garamond': "fonts/garamond.ttf",
     'Garamond Bold': "fonts/garamond-bold.ttf",
     'Garamond Italics': "fonts/garamond-italics.ttf"
 }
 
-def calculate_num_of_space(font_name, font_size, text1, text2, lm, rm):
+def calculate_num_of_space(font_name, effect, font_size, text1, text2, lm, rm):
     # Load the font
+    font_name = (font_name_dict[font_name])[effect]
     if font_name not in pdfmetrics.getRegisteredFontNames():
         pdfmetrics.registerFont(TTFont(font_name, font_path_dict[font_name]))
 

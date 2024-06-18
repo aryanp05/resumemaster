@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Master: {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            
+            <div class="logo">Resume Master</div>
+            <nav>
+                {% if session["user_id"] %}
+                <ul class="navbar-nav me-auto mt-2">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/create">Create</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/sell">Sell</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/change-password">Change Password</a></li>
+                </ul>
+                
+                {% else %}
+                <ul>
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                </ul> 
+                {% endif %}
+                
+            </nav>
+            <a href="/create" class="cta">Build Your Resume Now</a> 
+            {% if session["user_id"] %}
+            <nav>
+            <ul class="navbar-nav ms-auto mt-2">
+                <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+            </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </header>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-primary mb-0 text-center" role="alert">
+            {{ messages | join(" ") }}
+        </div>
+        {% endif %}
+        {% endwith %}
+    <main>{% block main %}{% endblock %}</main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Resume Master. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

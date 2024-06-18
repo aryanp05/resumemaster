@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block main %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <img src="/static/sample.jpg" alt="Resume Example">
+            <div id="b-text" class="hero-text">
+                <h1>Create Your Tailored Resume in <span id="blue">Seconds</span></h1>
+                <p id="sample-p">When applying to jobs, you want to make sure your resume perfectly hits all the job requirments. However, manually changing your projects, education, and experience bullet points to show why your the perfect candidate gets tedious when applying to hundreds of jobs. 
+                 <br><br> 
+                  Resume Master allows you to create and store versions of your education, expereince, projects, and technical skill sections, then allowing you to merge and mash different pieces to create your perfectly tailored resume in seconds,allowing you to quickly apply for that special job.</p>
+              <a href="/create" class="cta">Build Your Resume Now</a>
+              <ul class="arrow-list">
+                  <li>Create, customize, and save resumes with ease</li>
+                  <li>Generate professional resumes in two steps</li>
+                  <li>Display a real time resume for recruiters</li>
+              </ul>
+              <div id="spacer"></div>
+              
+            </div>   
+        </div>    
+    </div>
+</section>
+<section class="features">
+  <div class="container">
+      <h2>Why Choose <span id="blue">Resume Master?</span></h2>
+      <div class="feature-list">
+          <div class="feature">
+              <i class="fas fa-check-circle"></i>
+              <h3>Easy to Use</h3>
+              <p>Our tools are designed to be user-friendly, making it simple to create a standout resume.</p>
+          </div>
+          <div class="feature">
+              <i class="fas fa-lightbulb"></i>
+              <h3>Expert Guidance</h3>
+              <p>Get tips and advice from career experts to help you craft a resume that impresses.</p>
+          </div>
+          <div class="feature">
+              <i class="fas fa-cogs"></i>
+              <h3>Customization</h3>
+              <p>Customize templates and content to tailor your resume to your career goals.</p>
+          </div>
+      </div>
+  </div>
+</section>
+<section class="build-resume">
+  <div class="container">
+      <a href="/create" class="cta-button">Build Your Resume Now</a>
+  </div>
+</section>
+{% endblock %}
