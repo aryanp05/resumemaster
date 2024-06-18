@@ -126,7 +126,7 @@ def register():
         # Insert new user into the database
         db.execute("INSERT INTO users (username, password) VALUES(?, ?)",
                    request.form.get("username"), generate_password_hash(request.form.get("password")))
-
+        
         # Retrieve the newly created user's ID
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
 
@@ -164,11 +164,14 @@ def create():
 
         format_resume(person_name, contactInfoList, educationInfo, experienceInfo, projectInfo, skillsInfo)
 
-        return render_template("create.html")
+        return render_template("create.html", person_name=person_name, contactInfoList=contactInfoList)
     else:
         # Redirect user to login form
-        return render_template("create.html")
+        return render_template("create.html", person_name="", contactInfoList=[""])
 
 # if __name__ == '__main__':
 #     app.run(host="0.0.0.0", port=8000)
-#     #app.run(debug=True)
+#     #app.run(debug=True
+    
+
+#  

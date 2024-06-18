@@ -56,12 +56,19 @@
 
     .pdf-container {
         width: 800px;
+        margin-right: 820px;
     }
 
     .input-container {
-        flex-grow: 1; /* Allow input area to grow and fill available space */
-        margin-left: 20px;
-        text-align: center; /* Center align input headers */
+      position: fixed; /* Set position to fixed */
+      top: 50%; /* Position from the top */
+      left: 75%; /* Position from the left */
+      transform: translate(-50%, -50%); /* Center the container horizontally and vertically */
+      width: 800px; /* Set a fixed width */
+      padding: 20px; /* Add padding inside the container */
+      border: 2px solid #ccc; /* Add a border for visual separation */
+      background-color: #fff; /* Optional: Set a background color */
+      z-index: 1000; /* Optional: Set a higher z-index if needed */
     }
 
     .input-container input {
@@ -128,10 +135,12 @@
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        margin-top: 20px;
     }
 
     #generateButton:hover {
         background-color: #2980b9; /* Darker blue background on hover */
+        
     }
 
     .addBullet {
@@ -141,7 +150,7 @@
 
     .input-section {
         border: 1px solid #ccc;
-        margin-bottom: 20px; /* Add margin-bottom to create space between sections */
+        margin-bottom: 0px; /* Add margin-bottom to create space between sections */
         width: 800px;
     }
 
@@ -197,13 +206,13 @@
             <div class="input-section">
                 <h2 onclick="toggleSection(this)">Name</h2>
                 <div class="input-box">
-                    <input type="text" placeholder="Aryan Patel" name="person_name">
+                    <input type="text" placeholder="John Doe" name="person_name" value="{{ person_name }}"> 
                 </div>
             </div>
             <div class="input-section" id="contactInfoSection">
                 <h2 onclick="toggleSection(this)">Contact Info</h2>
                 <div class="input-box">
-                    <input name="contact_info" type="text" placeholder="Enter Contact Info">
+                    <input name="contact_info" type="text" placeholder="Enter Contact Info" value="{{ contactInfoList[0] }}">
                     <button type="button" id="addInput">+</button>
                 </div>
             </div>
@@ -278,13 +287,10 @@
             <button type="submit" id="generateButton">Generate</button>
         </div>
     </form>            
-    
+
 </div>
 
 <script>
-// document.getElementById('resume').addEventListener('submit', function(event) {
-//     event.preventDefault();
-// });
 
 let educationCounter = 0;
 let experienceCounter = 0;
@@ -292,28 +298,43 @@ let projectCounter = 0;
 let skillsCounter = 0;
 
 
+
+
 // Function to toggle visibility of input sections
 function toggleSection(header) {
-    const section = header.parentElement;
-    section.classList.toggle("active");
-}
+            const allSections = document.querySelectorAll('.input-section');
+            const section = header.parentElement; 
+            
+            if (section.classList.contains('active')) {
+                // Makes all input sections hidden
+                allSections.forEach(section => section.classList.remove('active')); 
+            }   else {
+                // Makes all input sections hidden
+                allSections.forEach(section => section.classList.remove('active')); 
+                // Makes the clicked input section visible
+                section.classList.add('active'); 
+            }
+        }
 
 // Get the plus button and the input container
 const addButton = document.getElementById("addInput");
 const contactInfoSection = document.getElementById("contactInfoSection");
 
 // Function to add new input box for Contact Info
-function addInputBox() {
-    // Create new input box
-    const newInputBox = document.createElement("input");
-    newInputBox.type = "text";
-    newInputBox.name = "contact_info";
-    newInputBox.placeholder = "Enter Contact Info";
-    contactInfoSection.querySelector(".input-box").insertBefore(newInputBox, addButton);
-}
+function addInputBox(value_box) {
+            // Create new input box
+            const newInputBox = document.createElement("input");
+            newInputBox.type = "text";
+            newInputBox.name = "contact_info";
+            newInputBox.placeholder = "Enter Contact Info";
+            newInputBox.value = value_box;
+            contactInfoSection.querySelector(".input-box").insertBefore(newInputBox, addButton);
+        }
 
-// Add event listener to the plus button for Contact Info
-addButton.addEventListener("click", addInputBox);
+        // Add event listener to the plus button for Contact Info
+        addButton.addEventListener("click", function() {
+        addInputBox("");
+    });
 
 // Function to add new bullet point input box
 function addBulletPoint(button, section_name, section_number) {
@@ -421,5 +442,17 @@ function addSkillSection() {
 
 // Add event listener to the add skill button
 document.getElementById("addSkill").addEventListener("click", addSkillSection);
+
 </script>
+{% if contactInfoList|length > 1 %}
+    {% for contactInfo in contactInfoList %}
+        {% if not loop.first %}
+            {% if not contactInfo == "" %}
+            <script>
+                addInputBox("{{ contactInfo }}");
+            </script>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 {% endblock %}
