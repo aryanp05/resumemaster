@@ -195,7 +195,102 @@
         border-top: 3px solid black; /* Add black border to the top */
         border-bottom: 3px solid black; /* Add black border to the bottom */
     }
+    .contact-info-entry {
+            display: flex;
+            align-items: center;
+        }
 
+        .contact-info-entry input {
+            flex: 1;
+            margin-right: 5px; /* Adjust margin as needed */
+            margin-left: 6px;
+        }
+
+        .contact-info-entry button {
+            margin-left: 5px; /* Adjust margin as needed */
+            margin-top: 0px;
+            padding-top: 0px;
+        }
+        #contactInfoSection #addInput {
+            display: block; /* Ensure the button behaves as a block element */
+            margin: 0 auto; /* Center align the button horizontally */
+            padding: 6px 10px; /* Adjust padding as needed */
+            font-size: 12px; /* Adjust font size as needed */
+            cursor: pointer;
+            border: none; /* Remove border */
+            background-color: #3498db; /* Light blue background color */
+            color: #fff; /* White text color */
+            border-radius: 4px; /* Add border radius */
+            transition: background-color 0.3s ease; /* Smooth transition for background color */
+        }
+
+        #contactInfoSection #addInput:hover {
+            background-color: #2980b9; /* Darker blue background color on hover */
+        }
+        #contactInfoSection #addInput,
+        .addBullet {
+            display: block; /* Ensure the button behaves as a block element */
+            margin: 10px auto; /* Center align the button horizontally */
+            padding: 6px 10px; /* Adjust padding as needed */
+            font-size: 8px; /* Adjust font size as needed */
+            cursor: pointer;
+            border: none; /* Remove border */
+            background-color: #3498db; /* Light blue background color */
+            color: #fff; /* White text color */
+            border-radius: 4px; /* Add border radius */
+            transition: background-color 0.3s ease; /* Smooth transition for background color */
+        }
+
+        #contactInfoSection #addInput:hover,
+        .addBullet:hover {
+            background-color: #2980b9; /* Darker blue background color on hover */
+        }
+        .addEducation,
+        .addExperience,
+        .addProject,
+        .addSkill {
+            display: none;
+            margin: 10px auto; /* Center align the button horizontally */
+            padding: 6px 10px; /* Adjust padding as needed */
+            font-size: 12px; /* Adjust font size as needed */
+            cursor: pointer;
+            border: none; /* Remove border */
+            background-color: #1a4a80; /* Darker blue background color */
+            color: #fff; /* White text color */
+            border-radius: 4px; /* Add border radius */
+            transition: background-color 0.3s ease; /* Smooth transition for background color */
+        }
+        .addEducation:hover,
+        .addExperience:hover,
+        .addProject:hover,
+        .addSkill:hover {
+            background-color: #123260; /* Even darker blue background color on hover */
+        }
+
+        .input-section.active .addEducation,
+        .input-section.active .addExperience,
+        .input-section.active .addProject,
+        .input-section.active .addSkill {
+            display: block; /* Show the button only when the section is active */
+        }
+        /* Styles for delete buttons */
+        .deleteEntry {
+            display: block;
+            margin: 10px auto; /* Center the button horizontally */
+            padding: 5px 10px;
+            background-color: #f44336; /* Red background for delete button */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center; /* Center the text inside the button */
+        }
+
+        /* Optional: Style for buttons on hover */
+        .deleteEntry:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+        }
+        
 </style>
 <div class="content-container">
     <div class="pdf-container">
@@ -230,12 +325,14 @@
                         </div>
                         <div class="bullet-point-section">
                             <textarea name="education[0]" type="text" placeholder="Bullet Point" rows="3"></textarea>
+                            <button type="button" class="addBullet" onclick="addBulletPoint(this, 'education', 0)">+</button>
                         </div>
-                        <button type="button" class="addBullet" onclick="addBulletPoint(this, 'education', 0)">+</button>
+                        <button type="button" class="deleteEntry" onclick="deleteEntry(this)">Delete</button>
                     </div>
                 </div>
                 <button type="button" class="addEducation" id="addEducation">Add Education</button>
             </div>
+
             <div class="input-section" id="experienceSection">
                 <h2 onclick="toggleSection(this)">Experience</h2>
                 <div class="input-box">
@@ -323,125 +420,119 @@ const contactInfoSection = document.getElementById("contactInfoSection");
 // Function to add new input box for Contact Info
 function addInputBox(value_box) {
             // Create new input box
-            const newInputBox = document.createElement("input");
-            newInputBox.type = "text";
-            newInputBox.name = "contact_info";
-            newInputBox.placeholder = "Enter Contact Info";
-            newInputBox.value = value_box;
+            const newInputBox = document.createElement("div");
+            newInputBox.classList.add("contact-info-entry");
+
+            const inputElement = document.createElement("input");
+            inputElement.type = "text";
+            inputElement.name = "contact_info";
+            inputElement.placeholder = "Enter Contact Info";
+            inputElement.value = value_box;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "-";
+            deleteButton.type = "button"; // Ensure it doesn't submit the form
+
+            deleteButton.addEventListener("click", function() {
+                // Remove the entire contact info entry when delete button is clicked
+                newInputBox.remove();
+            });
+
+            newInputBox.appendChild(inputElement);
+            newInputBox.appendChild(deleteButton);
+
+            // Insert new contact info entry before the add button
             contactInfoSection.querySelector(".input-box").insertBefore(newInputBox, addButton);
         }
 
         // Add event listener to the plus button for Contact Info
         addButton.addEventListener("click", function() {
-        addInputBox("");
-    });
+            addInputBox("");
+        });
 
-// Function to add new bullet point input box
-function addBulletPoint(button, section_name, section_number) {
-    const section = button.previousElementSibling;
-    const newTextArea = document.createElement("textarea");
-    newTextArea.placeholder = "Bullet Point";
-    newTextArea.rows = 3; // Set the rows attribute to 3
-    newTextArea.name = `${section_name}[${section_number}]`;
+        function addBulletPoint(button, section, index) {
+        const bulletPointSection = button.parentNode;
+        const newBulletPoint = document.createElement("textarea");
+        newBulletPoint.setAttribute("name", `${section}[${index}]`);
+        newBulletPoint.setAttribute("type", "text");
+        newBulletPoint.setAttribute("placeholder", "Bullet Point");
+        newBulletPoint.setAttribute("rows", "3");
+        bulletPointSection.insertBefore(newBulletPoint, button);
+    }
 
-    section.appendChild(newTextArea);
-}
+    function addEducationSection() {
+        const educationSection = document.getElementById("educationSection");
+        const newEducationEntry = document.createElement("div");
+        educationCounter++;
+        newEducationEntry.classList.add("education-entry");
+        newEducationEntry.innerHTML = `
+            <div class="content-row">
+                <input name="education[${educationCounter}]" type="text" placeholder="Institution Name">
+                <input name="education[${educationCounter}]" type="text" placeholder="Location">
+            </div>
+            <div class="content-row">
+                <input name="education[${educationCounter}]" type="text" placeholder="Degree">
+                <input name="education[${educationCounter}]" type="text" placeholder="Date">
+            </div>
+            <div class="bullet-point-section">
+                <textarea name="education[${educationCounter}]" placeholder="Education Point" rows="3"></textarea>
+                <button type="button" class="addBullet" onclick="addBulletPoint(this, 'education', ${educationCounter})">+</button>
+            </div>
+            <button type="button" class="deleteEntry" onclick="deleteEntry(this)">Delete</button>
+        `;
+        educationSection.querySelector(".input-box").appendChild(newEducationEntry);
+    }
 
-// Function to add new education input section
-function addEducationSection() {
-    const educationSection = document.getElementById("educationSection");
-    const newEducationEntry = document.createElement("div");
-    educationCounter++;
-    newEducationEntry.classList.add("education-entry");
-    newEducationEntry.innerHTML = `
-        <div class="content-row">
-            <input name="education[${educationCounter}]" type="text" placeholder="Institution Name">
-            <input name="education[${educationCounter}]" type="text" placeholder="Location">
-        </div>
-        <div class="content-row">
-            <input name="education[${educationCounter}]" type="text" placeholder="Degree">
-            <input name="education[${educationCounter}]" type="text" placeholder="Date">
-        </div>
-        <div class="bullet-point-section">
-            <textarea name="education[${educationCounter}]" placeholder="Education Point" rows="3"></textarea>
-        </div>
-        <button type="button" class="addBullet" onclick="addBulletPoint(this, 'education', ${educationCounter})">+</button>
-    `;
-    // document.getElementById('educationCounter').value = educationCounter;
-    educationSection.querySelector(".input-box").appendChild(newEducationEntry);
-}
+    function addExperienceSection() {
+        const experienceSection = document.getElementById("experienceSection");
+        const newExperienceEntry = document.createElement("div");
+        experienceCounter++;
+        newExperienceEntry.classList.add("experience-entry");
+        newExperienceEntry.innerHTML = `
+            <div class="content-row">
+                <input name="experience[${experienceCounter}]" type="text" placeholder="Role">
+                <input name="experience[${experienceCounter}]" type="text" placeholder="Location">
+            </div>
+            <div class="content-row">
+                <input name="experience[${experienceCounter}]" type="text" placeholder="Company">
+                <input name="experience[${experienceCounter}]" type="text" placeholder="Date">
+            </div>
+            <div class="bullet-point-section">
+                <textarea name="experience[${experienceCounter}]" placeholder="Experience Point" rows="3"></textarea>
+                <button type="button" class="addBullet" onclick="addBulletPoint(this, 'experience', ${experienceCounter})">+</button>
+            </div>
+            <button type="button" class="deleteEntry" onclick="deleteEntry(this)">Delete</button>
+        `;
+        experienceSection.querySelector(".input-box").appendChild(newExperienceEntry);
+    }
 
-// Function to add new experience input section
-function addExperienceSection() {
-    const experienceSection = document.getElementById("experienceSection");
-    const newExperienceEntry = document.createElement("div");
-    experienceCounter++;
-    newExperienceEntry.classList.add("experience-entry");
-    newExperienceEntry.innerHTML = `
-        <div class="content-row">
-            <input name="experience[${experienceCounter}]" type="text" placeholder="Role">
-            <input name="experience[${experienceCounter}]" type="text" placeholder="Location">
-        </div>
-        <div class="content-row">
-            <input name="experience[${experienceCounter}]" type="text" placeholder="Company">
-            <input name="experience[${experienceCounter}]" type="text" placeholder="Date">
-        </div>
-        <div class="bullet-point-section">
-            <textarea name="experience[${experienceCounter}]" placeholder="Experience Point" rows="3"></textarea>
-        </div>
-        <button type="button" class="addBullet" onclick="addBulletPoint(this, 'experience', ${experienceCounter})">+</button>
-    `;
-    // document.getElementById('experienceCounter').value = experienceCounter;
-    experienceSection.querySelector(".input-box").appendChild(newExperienceEntry);
-}
+    function addProjectSection() {
+        const projectsSection = document.getElementById("projectsSection");
+        const newProjectEntry = document.createElement("div");
+        projectCounter++;
+        newProjectEntry.classList.add("project-entry");
+        newProjectEntry.innerHTML = `
+            <div class="content-row">
+                <input name="project[${projectCounter}]" type="text" placeholder="Project Name">
+                <input name="project[${projectCounter}]" type="text" placeholder="Date">
+            </div>
+            <div class="bullet-point-section">
+                <textarea name="project[${projectCounter}]" placeholder="Project Point" rows="3"></textarea>
+                <button type="button" class="addBullet" onclick="addBulletPoint(this, 'project', ${projectCounter})">+</button>
+            </div>
+            <button type="button" class="deleteEntry" onclick="deleteEntry(this)">Delete</button>
+        `;
+        projectsSection.querySelector(".input-box").appendChild(newProjectEntry);
+    }
 
-// Function to add new project input section
-function addProjectSection() {
-    const projectsSection = document.getElementById("projectsSection");
-    const newProjectEntry = document.createElement("div");
-    projectCounter++;
-    newProjectEntry.classList.add("project-entry");
-    newProjectEntry.innerHTML = `
-        <div class="content-row">
-            <input name="project[${projectCounter}]" type="text" placeholder="Project Name">
-            <input name="project[${projectCounter}]" type="text" placeholder="Date">
-        </div>
-        <div class="bullet-point-section">
-            <textarea name="project[${projectCounter}]" placeholder="Project Point" rows="3"></textarea>
-        </div>
-        <button type="button" class="addBullet" onclick="addBulletPoint(this, 'project', ${projectCounter})">+</button>
-    `;
-    // document.getElementById('projectCounter').value = projectCounter;
-    projectsSection.querySelector(".input-box").appendChild(newProjectEntry);
-}
+    document.getElementById('addEducation').addEventListener('click', addEducationSection);
+    document.getElementById('addExperience').addEventListener('click', addExperienceSection);
+    document.getElementById('addProject').addEventListener('click', addProjectSection);
 
-// Add event listener to the add education button
-document.getElementById("addEducation").addEventListener("click", addEducationSection);
+    function deleteEntry(button) {
+        button.parentElement.remove();
+    }
 
-// Add event listener to the add experience button
-document.getElementById("addExperience").addEventListener("click", addExperienceSection);
-
-// Add event listener to the add project button
-document.getElementById("addProject").addEventListener("click", addProjectSection);
-
-// Function to add new skill input section
-function addSkillSection() {
-    const skillsSection = document.getElementById("skillsSection");
-    const newSkillEntry = document.createElement("div");
-    skillsCounter++;
-    newSkillEntry.classList.add("skill-entry");
-    newSkillEntry.innerHTML = `
-        <input name="skills[${skillsCounter}]" id="skill_name" type="text" placeholder="Skill Name">
-        <div class="list_skill">
-            <input name="skills[${skillsCounter}]" type="text" placeholder="List Skills">
-        </div>
-    `;
-    // document.getElementById('skillsCounter').value = skillsCounter;
-    skillsSection.querySelector(".input-box").appendChild(newSkillEntry);
-}
-
-// Add event listener to the add skill button
-document.getElementById("addSkill").addEventListener("click", addSkillSection);
 
 </script>
 {% if contactInfoList|length > 1 %}
