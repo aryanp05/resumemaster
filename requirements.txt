@@ -1,0 +1,7 @@
+Flask
+Flask-Session
+Werkzeug
+cs50
+docx
+docx2pdf
+reportlab
