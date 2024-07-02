@@ -1,7 +1,7 @@
 Flask==2.1.2
 Flask-Session==0.4.0
 Werkzeug==2.1.2
-cs50==5.0.1
+cs50
 python-docx==0.8.11
 docx2pdf==0.1.7
 reportlab==3.6.12
