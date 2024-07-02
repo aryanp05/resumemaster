@@ -2,7 +2,6 @@ from docx import Document
 from docx.shared import Pt, Cm, Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from CR_add_funcs import add_contact_info, add_education, add_experience, add_projects, add_sectionheader, add_technical_skills
-import pypandoc
 
 para_spacing = 6
 line_spacing = 14

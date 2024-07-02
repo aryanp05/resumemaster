@@ -316,15 +316,15 @@
                 <div class="input-box">
                     <div class="education-entry">
                         <div class="content-row">
-                            <input name="education[0]" type="text" placeholder="Institution Name">
-                            <input name="education[0]" type="text" placeholder="Location">
+                            <input name="education[0]" type="text" placeholder="Institution Name" value="{{ educationInfo[0][0]}}">
+                            <input name="education[0]" type="text" placeholder="Location" value="{{ educationInfo[0][1]}}">
                         </div>
                         <div class="content-row">
-                            <input name="education[0]" type="text" placeholder="Degree">
-                            <input name="education[0]" type="text" placeholder="Date">
+                            <input name="education[0]" type="text" placeholder="Degree" value="{{ educationInfo[0][2]}}">
+                            <input name="education[0]" type="text" placeholder="Date" value="{{ educationInfo[0][3]}}">
                         </div>
                         <div class="bullet-point-section">
-                            <textarea name="education[0]" type="text" placeholder="Bullet Point" rows="3"></textarea>
+                            <textarea name="education[0]" type="text" placeholder="Bullet Point" rows="3">{{ educationInfo[0][4]}}</textarea>
                             <button type="button" class="addBullet" onclick="addBulletPoint(this, 'education', 0)">+</button>
                         </div>
                         <button type="button" class="deleteEntry" onclick="deleteEntry(this)">Delete</button>
@@ -450,32 +450,33 @@ function addInputBox(value_box) {
             addInputBox("");
         });
 
-        function addBulletPoint(button, section, index) {
+        function addBulletPoint(button, section, index, text = "") {
         const bulletPointSection = button.parentNode;
         const newBulletPoint = document.createElement("textarea");
         newBulletPoint.setAttribute("name", `${section}[${index}]`);
         newBulletPoint.setAttribute("type", "text");
         newBulletPoint.setAttribute("placeholder", "Bullet Point");
         newBulletPoint.setAttribute("rows", "3");
+        newBulletPoint.value = text;
         bulletPointSection.insertBefore(newBulletPoint, button);
     }
 
-    function addEducationSection() {
+    function addEducationSection(institution = "", location =  "", degree = "", date = "", text = "") {
         const educationSection = document.getElementById("educationSection");
         const newEducationEntry = document.createElement("div");
         educationCounter++;
         newEducationEntry.classList.add("education-entry");
         newEducationEntry.innerHTML = `
             <div class="content-row">
-                <input name="education[${educationCounter}]" type="text" placeholder="Institution Name">
-                <input name="education[${educationCounter}]" type="text" placeholder="Location">
+                <input name="education[${educationCounter}]" type="text" placeholder="Institution Name" value="${institution}">
+                <input name="education[${educationCounter}]" type="text" placeholder="Location" value="${location}">
             </div>
             <div class="content-row">
-                <input name="education[${educationCounter}]" type="text" placeholder="Degree">
-                <input name="education[${educationCounter}]" type="text" placeholder="Date">
+                <input name="education[${educationCounter}]" type="text" placeholder="Degree" value="${degree}">
+                <input name="education[${educationCounter}]" type="text" placeholder="Date" value="${date}">
             </div>
             <div class="bullet-point-section">
-                <textarea name="education[${educationCounter}]" placeholder="Education Point" rows="3"></textarea>
+                <textarea name="education[${educationCounter}]" placeholder="Education Point" rows="3">${text}</textarea>
                 <button type="button" class="addBullet" onclick="addBulletPoint(this, 'education', ${educationCounter})">+</button>
             </div>
             <button type="button" class="deleteEntry" onclick="deleteEntry(this)">Delete</button>
@@ -525,7 +526,9 @@ function addInputBox(value_box) {
         projectsSection.querySelector(".input-box").appendChild(newProjectEntry);
     }
 
-    document.getElementById('addEducation').addEventListener('click', addEducationSection);
+    document.getElementById('addEducation').addEventListener('click', function() {
+    addEducationSection();
+});
     document.getElementById('addExperience').addEventListener('click', addExperienceSection);
     document.getElementById('addProject').addEventListener('click', addProjectSection);
 
@@ -543,6 +546,24 @@ function addInputBox(value_box) {
                 addInputBox("{{ contactInfo }}");
             </script>
             {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if educationInfo|length > 1 %}
+    {% for education in educationInfo %}
+        {% if not loop.first %}
+            {% if not education[0] == "" %}
+            <script>
+                addEducationSection("{{ education[0] }}", "{{ education[1] }}", "{{ education[2] }}", "{{ education[3] }}", "{{ education[4] }}");
+            </script>
+            {% endif %}
+        {% endif %}
+        
+        {% if education|length > 5 %}
+            <script>
+                addBulletPoint(null, 'education', '{{ loop.index0 }}', "{{ education[4] }}");
+            </script>
         {% endif %}
     {% endfor %}
 {% endif %}
