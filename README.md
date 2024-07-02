@@ -1,4 +1,4 @@
-# 📄 Resume Master 📄
+# 📄 Resume Master (WIP) 📄
 
 **Want to create professional resumes effortlessly? 📝** <br>
 <br>
@@ -8,9 +8,9 @@
 <br>
 **Resume Master has got you covered! 🚀** <br>
 <br>
-Resume Master is your one-stop solution for creating, saving, merging, and tailoring resumes for job applications. With an intuitive web interface and powerful tools, you can manage your resume components with ease and create customized resumes in no time!
+Resume Master is your one-stop solution for creating, saving, merging, and tailoring resumes for job applications. With an intuitive web interface and powerful tools, you can manage your resume components with ease and create customized resumes in no time! Click here: https://resumemaster.azurewebsites.net
 
-![Homepage](screenshots/homepage.png)
+![Homepage](screenshots/homescreen.png)
 
 - **User Authentication**: Secure login and session management using Flask-Session and Werkzeug.
 - **Resume Creation**: Easily create and format resumes using an intuitive web interface.
